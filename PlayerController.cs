@@ -119,10 +119,10 @@ public class PlayerController : MonoBehaviour
                     anim.SetTrigger("useWateringCan");
                     break;
                 case ToolType.seeds:
-                    // Plant seeds
+                    growBlock.PlantSeed();
                     break;
                 case ToolType.basket:
-                    // Harvest the plant
+                    growBlock.HarvestCrop();
                     break;
                 default:
                     break;
