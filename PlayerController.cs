@@ -3,13 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private InputActionReference moveInput;
-    [SerializeField] private InputActionReference actionInput;
-    [SerializeField] private Animator anim;
-
-    private Rigidbody2D rb;
-
     public enum ToolType
     {
         hoe,
@@ -20,22 +13,42 @@ public class PlayerController : MonoBehaviour
 
     public ToolType currentTool;
 
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private InputActionReference moveInput;
+    [SerializeField] private InputActionReference actionInput;
+    [SerializeField] private Animator anim;
+    [SerializeField] private float toolWaitTime = 0.5f;
+
+    private Rigidbody2D rb;
+    private float toolWaitCounter;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        UIController.instance.SwitchTool((int)currentTool);
     }
 
     void Update()
     {
-        rb.linearVelocity = moveInput.action.ReadValue<Vector2>().normalized * moveSpeed;
-
-        if (rb.linearVelocity.x < 0f)
+        if (toolWaitCounter > 0f)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            rb.linearVelocity = Vector2.zero;
+            toolWaitCounter -= Time.deltaTime;
         }
-        else if (rb.linearVelocity.x > 0f)
+        else
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            rb.linearVelocity = moveInput.action.ReadValue<Vector2>().normalized * moveSpeed;
+
+            if (rb.linearVelocity.x < 0f)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
+            else if (rb.linearVelocity.x > 0f)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
         }
 
         bool hasSwitchedTool = false;
@@ -91,17 +104,19 @@ public class PlayerController : MonoBehaviour
 
         growBlock = FindFirstObjectByType<GrowBlock>();
 
-        //growBlock.PloughSoil();
+        toolWaitCounter = toolWaitTime;
 
-        if(growBlock != null)
+        if (growBlock != null)
         {
             switch (currentTool)
             {
                 case ToolType.hoe:
                     growBlock.PloughSoil();
+                    anim.SetTrigger("useHoe");
                     break;
                 case ToolType.wateringCan:
-                    // Water the plant
+                    growBlock.WaterSoil();
+                    anim.SetTrigger("useWateringCan");
                     break;
                 case ToolType.seeds:
                     // Plant seeds

@@ -17,6 +17,9 @@ public class GrowBlock : MonoBehaviour
     public GrowthStage currentStage;
     public SpriteRenderer spriteRenderer;
     public Sprite soilTilled;
+    public Sprite soilWatered;
+
+    public bool isWatered;
 
     void Start()
     {
@@ -51,7 +54,14 @@ public class GrowBlock : MonoBehaviour
         }
         else
         {
-            spriteRenderer.sprite = soilTilled;
+            if(isWatered)
+            {
+                spriteRenderer.sprite = soilWatered;
+            }
+            else
+            {
+                spriteRenderer.sprite = soilTilled;
+            }
         }
     }
 
@@ -62,5 +72,12 @@ public class GrowBlock : MonoBehaviour
             currentStage = GrowthStage.ploughed;
             SetSoilSprite();
         }
+    }
+
+    public void WaterSoil()
+    {
+        isWatered = true;
+
+        SetSoilSprite();
     }
 }
