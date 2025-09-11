@@ -10,6 +10,16 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    public enum ToolType
+    {
+        hoe,
+        wateringCan,
+        seeds,
+        basket
+    }
+
+    public ToolType currentTool;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,7 +38,33 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
-        if(actionInput.action.WasPressedThisFrame())
+        if(Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            currentTool++;
+            if ((int)currentTool > System.Enum.GetValues(typeof(ToolType)).Length - 1)
+            {
+                currentTool = ToolType.hoe;
+            }
+        }
+
+        if(Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            currentTool = ToolType.hoe;
+        }
+        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+        {
+            currentTool = ToolType.wateringCan;
+        }
+        else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            currentTool = ToolType.seeds;
+        }
+        else if (Keyboard.current.digit4Key.wasPressedThisFrame)
+        {
+            currentTool = ToolType.basket;
+        }
+
+        if (actionInput.action.WasPressedThisFrame())
         {
             UseTool();
         }
@@ -42,6 +78,27 @@ public class PlayerController : MonoBehaviour
 
         growBlock = FindFirstObjectByType<GrowBlock>();
 
-        growBlock.PloughSoil();
+        //growBlock.PloughSoil();
+
+        if(growBlock != null)
+        {
+            switch (currentTool)
+            {
+                case ToolType.hoe:
+                    growBlock.PloughSoil();
+                    break;
+                case ToolType.wateringCan:
+                    // Water the plant
+                    break;
+                case ToolType.seeds:
+                    // Plant seeds
+                    break;
+                case ToolType.basket:
+                    // Harvest the plant
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
