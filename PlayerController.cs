@@ -38,30 +38,43 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
-        if(Keyboard.current.tabKey.wasPressedThisFrame)
+        bool hasSwitchedTool = false;
+
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
         {
             currentTool++;
             if ((int)currentTool > System.Enum.GetValues(typeof(ToolType)).Length - 1)
             {
                 currentTool = ToolType.hoe;
             }
+            
+            hasSwitchedTool = true;
         }
 
         if(Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             currentTool = ToolType.hoe;
+            hasSwitchedTool = true;
         }
         else if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             currentTool = ToolType.wateringCan;
+            hasSwitchedTool = true;
         }
         else if (Keyboard.current.digit3Key.wasPressedThisFrame)
         {
             currentTool = ToolType.seeds;
+            hasSwitchedTool = true;
         }
         else if (Keyboard.current.digit4Key.wasPressedThisFrame)
         {
             currentTool = ToolType.basket;
+            hasSwitchedTool = true;
+        }
+
+        if (hasSwitchedTool)
+        {
+            UIController.instance.SwitchTool((int)currentTool);
         }
 
         if (actionInput.action.WasPressedThisFrame())
