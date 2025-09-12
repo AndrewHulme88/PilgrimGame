@@ -1,10 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GridController : MonoBehaviour
 {
     public Transform minPoint;
     public Transform maxPoint;
     public GrowBlock growBlockPrefab;
+    public List<BlockRow> blockRows = new List<BlockRow>();
+    public LayerMask gridBlockerLayer;
 
     private Vector2Int gridSize;
 
@@ -29,14 +32,29 @@ public class GridController : MonoBehaviour
 
         gridSize = new Vector2Int(Mathf.RoundToInt(maxPoint.position.x - minPoint.position.x), Mathf.RoundToInt(maxPoint.position.y - minPoint.position.y));
 
-        for (int x = 0; x < gridSize.x; x++)
+        for (int y = 0; y < gridSize.y; y++)
         {
-            for (int y = 0; y < gridSize.y; y++)
+            blockRows.Add(new BlockRow());
+
+            for (int x = 0; x < gridSize.x; x++)
             {
                 GrowBlock newBlock = Instantiate(growBlockPrefab, startPoint + new Vector3(x, y, 0f), Quaternion.identity);
 
                 newBlock.transform.SetParent(transform);
+                blockRows[y].blocks.Add(newBlock);
+
+                if (Physics2D.OverlapBox(newBlock.transform.position, new Vector2(0.9f, 0.9f), 0f, gridBlockerLayer))
+                {
+                    newBlock.spriteRenderer.sprite = null;
+                    newBlock.preventUse = true;
+                }
             }
         }
     }
+}
+
+[System.Serializable]
+public class BlockRow
+{
+    public List<GrowBlock> blocks = new List<GrowBlock>();
 }
