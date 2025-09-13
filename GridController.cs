@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class GridController : MonoBehaviour
 {
+    public static GridController instance;
+
     public Transform minPoint;
     public Transform maxPoint;
     public GrowBlock growBlockPrefab;
@@ -11,14 +13,21 @@ public class GridController : MonoBehaviour
 
     private Vector2Int gridSize;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         GenerateGrid();
-    }
-
-    void Update()
-    {
-        
     }
 
     private void GenerateGrid()
@@ -41,6 +50,7 @@ public class GridController : MonoBehaviour
                 GrowBlock newBlock = Instantiate(growBlockPrefab, startPoint + new Vector3(x, y, 0f), Quaternion.identity);
 
                 newBlock.transform.SetParent(transform);
+                newBlock.spriteRenderer.sprite = null;
                 blockRows[y].blocks.Add(newBlock);
 
                 if (Physics2D.OverlapBox(newBlock.transform.position, new Vector2(0.9f, 0.9f), 0f, gridBlockerLayer))
@@ -50,6 +60,25 @@ public class GridController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public GrowBlock GetBlock(float x, float y)
+    {
+        x = Mathf.RoundToInt(x);
+        y = Mathf.RoundToInt(y);
+
+        x -= minPoint.position.x;
+        y -= minPoint.position.y;
+
+        int intX = Mathf.RoundToInt(x);
+        int intY = Mathf.RoundToInt(y);
+
+        if(intX < gridSize.x && intY < gridSize.y)
+        {
+            return blockRows[intY].blocks[intX];
+        }
+
+        return null;
     }
 }
 
