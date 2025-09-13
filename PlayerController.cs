@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference actionInput;
     [SerializeField] private Animator anim;
     [SerializeField] private float toolWaitTime = 0.5f;
+    [SerializeField] private Transform toolIndicator;
 
     private Rigidbody2D rb;
     private float toolWaitCounter;
@@ -96,6 +97,9 @@ public class PlayerController : MonoBehaviour
         }
 
         anim.SetFloat("speed", rb.linearVelocity.magnitude);
+
+        toolIndicator.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        toolIndicator.position = new Vector3(toolIndicator.position.x, toolIndicator.position.y, 0f);
     }
 
     private void UseTool()
