@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private float toolWaitTime = 0.5f;
     [SerializeField] private Transform toolIndicator;
+    [SerializeField] private float toolRange = 3f;
 
     private Rigidbody2D rb;
     private float toolWaitCounter;
@@ -100,6 +101,13 @@ public class PlayerController : MonoBehaviour
 
         toolIndicator.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         toolIndicator.position = new Vector3(toolIndicator.position.x, toolIndicator.position.y, 0f);
+
+        if (Vector3.Distance(toolIndicator.position, transform.position) > toolRange)
+        {
+            toolIndicator.position = transform.position + (toolIndicator.position - transform.position).normalized * toolRange;
+        }
+
+        toolIndicator.position = new Vector3(Mathf.FloorToInt(toolIndicator.position.x) + 0.5f, Mathf.FloorToInt(toolIndicator.position.y) + 0.5f, 0f);
     }
 
     private void UseTool()
