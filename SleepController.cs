@@ -11,7 +11,10 @@ public class SleepController : MonoBehaviour
         {
             if(Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame)
             {
-                GridInfo.instance.GrowCrop();
+                if (TimeController.instance != null)
+                {
+                    TimeController.instance.EndDay();
+                }
             }
         }
     }

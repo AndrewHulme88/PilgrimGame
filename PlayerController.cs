@@ -115,8 +115,6 @@ public class PlayerController : MonoBehaviour
                 UseTool();
             }
 
-            anim.SetFloat("speed", rb.linearVelocity.magnitude);
-
             toolIndicator.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             toolIndicator.position = new Vector3(toolIndicator.position.x, toolIndicator.position.y, 0f);
 
@@ -131,6 +129,8 @@ public class PlayerController : MonoBehaviour
         {
             toolIndicator.gameObject.SetActive(false);
         }
+
+        anim.SetFloat("speed", rb.linearVelocity.magnitude);
     }
 
     private void UseTool()
