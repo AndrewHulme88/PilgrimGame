@@ -60,6 +60,11 @@ public class GridController : MonoBehaviour
                 }
             }
         }
+
+        if(!GridInfo.instance.hasGrid)
+        {
+            GridInfo.instance.CreateGrid();
+        }
     }
 
     public GrowBlock GetBlock(float x, float y)
