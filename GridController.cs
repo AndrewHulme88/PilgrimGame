@@ -51,12 +51,24 @@ public class GridController : MonoBehaviour
 
                 newBlock.transform.SetParent(transform);
                 newBlock.spriteRenderer.sprite = null;
+
+                newBlock.SetGridPosition(x, y);
+
                 blockRows[y].blocks.Add(newBlock);
 
                 if (Physics2D.OverlapBox(newBlock.transform.position, new Vector2(0.9f, 0.9f), 0f, gridBlockerLayer))
                 {
                     newBlock.spriteRenderer.sprite = null;
                     newBlock.preventUse = true;
+                }
+
+                if(GridInfo.instance.hasGrid)
+                {
+                    BlockInfo savedBlock = GridInfo.instance.grid[y].blocks[x];
+                    newBlock.currentStage = savedBlock.currentStage;
+                    newBlock.isWatered = savedBlock.isWatered;
+                    newBlock.SetSoilSprite();
+                    newBlock.UpdateCropSprite();
                 }
             }
         }

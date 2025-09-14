@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     public enum ToolType
     {
         hoe,
@@ -24,6 +26,18 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private float toolWaitCounter;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -92,22 +106,31 @@ public class PlayerController : MonoBehaviour
             UIController.instance.SwitchTool((int)currentTool);
         }
 
-        if (actionInput.action.WasPressedThisFrame())
+        if (GridController.instance != null)
         {
-            UseTool();
+            toolIndicator.gameObject.SetActive(true);
+
+            if (actionInput.action.WasPressedThisFrame())
+            {
+                UseTool();
+            }
+
+            anim.SetFloat("speed", rb.linearVelocity.magnitude);
+
+            toolIndicator.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            toolIndicator.position = new Vector3(toolIndicator.position.x, toolIndicator.position.y, 0f);
+
+            if (Vector3.Distance(toolIndicator.position, transform.position) > toolRange)
+            {
+                toolIndicator.position = transform.position + (toolIndicator.position - transform.position).normalized * toolRange;
+            }
+
+            toolIndicator.position = new Vector3(Mathf.FloorToInt(toolIndicator.position.x) + 0.5f, Mathf.FloorToInt(toolIndicator.position.y) + 0.5f, 0f);
         }
-
-        anim.SetFloat("speed", rb.linearVelocity.magnitude);
-
-        toolIndicator.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        toolIndicator.position = new Vector3(toolIndicator.position.x, toolIndicator.position.y, 0f);
-
-        if (Vector3.Distance(toolIndicator.position, transform.position) > toolRange)
+        else
         {
-            toolIndicator.position = transform.position + (toolIndicator.position - transform.position).normalized * toolRange;
+            toolIndicator.gameObject.SetActive(false);
         }
-
-        toolIndicator.position = new Vector3(Mathf.FloorToInt(toolIndicator.position.x) + 0.5f, Mathf.FloorToInt(toolIndicator.position.y) + 0.5f, 0f);
     }
 
     private void UseTool()

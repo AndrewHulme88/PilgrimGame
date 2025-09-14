@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        target = FindAnyObjectByType<PlayerController>().transform;
+        target = PlayerController.instance.transform;
         targetCamera = GetComponent<Camera>();
 
         clampMin.SetParent(null);

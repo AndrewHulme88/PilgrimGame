@@ -27,10 +27,7 @@ public class GrowBlock : MonoBehaviour
     public bool isWatered;
     public bool preventUse;
 
-    void Start()
-    {
-        
-    }
+    private Vector2Int gridPosition;
 
     void Update()
     {
@@ -72,6 +69,8 @@ public class GrowBlock : MonoBehaviour
                 spriteRenderer.sprite = soilTilled;
             }
         }
+
+         UpdateGridInfo();
     }
 
     public void PloughSoil()
@@ -103,7 +102,7 @@ public class GrowBlock : MonoBehaviour
         }
     }
 
-    private void UpdateCropSprite()
+    public void UpdateCropSprite()
     {
         switch (currentStage)
         {
@@ -123,6 +122,8 @@ public class GrowBlock : MonoBehaviour
                 cropSpriteRenderer.sprite = cropRipe;
                 break;
         }
+
+        UpdateGridInfo();
     }
 
     public void AdvanceCrop()
@@ -148,5 +149,15 @@ public class GrowBlock : MonoBehaviour
             cropSpriteRenderer.sprite = null;
             SetSoilSprite();
         }
+    }
+
+    public void SetGridPosition(int x, int y)
+    {
+        gridPosition = new Vector2Int(x, y);
+    }
+
+    void UpdateGridInfo()
+    {
+        GridInfo.instance.UpdateInfo(this, gridPosition.x, gridPosition.y);
     }
 }

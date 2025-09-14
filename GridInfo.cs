@@ -34,11 +34,37 @@ public class GridInfo : MonoBehaviour
             }
         }
     }
+
+    public void UpdateInfo(GrowBlock growBlock, int xPos, int yPos)
+    {
+        grid[yPos].blocks[xPos].isWatered = growBlock.isWatered;
+        grid[yPos].blocks[xPos].currentStage = growBlock.currentStage;
+    }
+
+    public void GrowCrop()
+    {
+        for (int y = 0; y < grid.Count; y++)
+        {
+            for (int x = 0; x < grid[y].blocks.Count; x++)
+            {
+                if (grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.planted || grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.growing1 || grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.growing2)
+                {
+                    if (grid[y].blocks[x].isWatered)
+                    {
+                        grid[y].blocks[x].currentStage++;
+                        grid[y].blocks[x].isWatered = false;
+                    }
+                }
+            }
+        }
+    }
 }
 
 [System.Serializable]
 public class BlockInfo
 {
+    //TODO: Implement proper saving/loading of grid info
+
     public bool isWatered;
     public GrowBlock.GrowthStage currentStage;
 }
