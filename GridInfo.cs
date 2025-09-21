@@ -40,6 +40,7 @@ public class GridInfo : MonoBehaviour
         grid[yPos].blocks[xPos].isWatered = growBlock.isWatered;
         grid[yPos].blocks[xPos].currentStage = growBlock.currentStage;
         grid[yPos].blocks[xPos].cropType = growBlock.cropType;
+        grid[yPos].blocks[xPos].growFailChance = growBlock.growFailChance;
     }
 
     public void GrowCrop()
@@ -48,13 +49,23 @@ public class GridInfo : MonoBehaviour
         {
             for (int x = 0; x < grid[y].blocks.Count; x++)
             {
-                if (grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.planted || grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.growing1 || grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.growing2)
+                float growFailChance = Random.Range(0f, 100f);
+
+                if(growFailChance > grid[y].blocks[x].growFailChance)
                 {
-                    if (grid[y].blocks[x].isWatered)
+                    if (grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.planted || grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.growing1 || grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.growing2)
                     {
-                        grid[y].blocks[x].currentStage++;
-                        grid[y].blocks[x].isWatered = false;
+                        if (grid[y].blocks[x].isWatered)
+                        {
+                            grid[y].blocks[x].currentStage++;
+                            grid[y].blocks[x].isWatered = false;
+                        }
                     }
+                }
+
+                if (grid[y].blocks[x].currentStage == GrowBlock.GrowthStage.ploughed)
+                {
+                    grid[y].blocks[x].currentStage = GrowBlock.GrowthStage.barren;
                 }
             }
         }
@@ -70,6 +81,7 @@ public class BlockInfo
     public GrowBlock.GrowthStage currentStage;
 
     public CropController.CropType cropType;
+    public float growFailChance;
 }
 
 [System.Serializable]

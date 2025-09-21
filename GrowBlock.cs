@@ -27,6 +27,8 @@ public class GrowBlock : MonoBehaviour
     public bool isWatered;
     public bool preventUse;
 
+    public float growFailChance;
+
     public CropController.CropType cropType;
 
     private Vector2Int gridPosition;
@@ -101,6 +103,8 @@ public class GrowBlock : MonoBehaviour
             currentStage = GrowthStage.planted;
             
             cropType = cropToPlant;
+
+            growFailChance = CropController.instance.GetCropInfo(cropType).growFailChance;
 
             UpdateCropSprite();
         }

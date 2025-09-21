@@ -90,4 +90,7 @@ public class CropInfo
     public Sprite ripe;
     public int seedAmount;
     public int cropAmount;
+
+    [Range(0f, 100f)]
+    public float growFailChance;
 }

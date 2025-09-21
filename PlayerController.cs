@@ -139,8 +139,6 @@ public class PlayerController : MonoBehaviour
     {
         GrowBlock growBlock = null;
 
-        //growBlock = FindFirstObjectByType<GrowBlock>();
-
         growBlock = GridController.instance.GetBlock(toolIndicator.position.x - 0.5f, toolIndicator.position.y - 0.5f);
 
         toolWaitCounter = toolWaitTime;
@@ -153,17 +151,26 @@ public class PlayerController : MonoBehaviour
                     growBlock.PloughSoil();
                     anim.SetTrigger("useHoe");
                     break;
+
                 case ToolType.wateringCan:
                     growBlock.WaterSoil();
                     anim.SetTrigger("useWateringCan");
                     break;
+
                 case ToolType.seeds:
-                    growBlock.PlantSeed(currentSeedCropType);
-                    CropController.instance.UseSeed(currentSeedCropType);
+
+                    if(CropController.instance.GetCropInfo(currentSeedCropType).seedAmount > 0)
+                    {
+                        growBlock.PlantSeed(currentSeedCropType);
+                        CropController.instance.UseSeed(currentSeedCropType);         
+                    }
+
                     break;
+
                 case ToolType.basket:
                     growBlock.HarvestCrop();
                     break;
+
                 default:
                     break;
             }
