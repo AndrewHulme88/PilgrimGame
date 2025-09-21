@@ -8,7 +8,8 @@ public class TimeController : MonoBehaviour
     [SerializeField] private float dayStartTime;
     [SerializeField] private float dayEndTime;
     [SerializeField] private float timeSpeed = 0.25f;
-    [SerializeField] private int currentDay = 1;
+    
+    public int currentDay = 1;
 
     private bool timeActive;
 
