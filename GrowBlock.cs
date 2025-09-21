@@ -94,34 +94,38 @@ public class GrowBlock : MonoBehaviour
         }
     }
 
-    public void PlantSeed()
+    public void PlantSeed(CropController.CropType cropToPlant)
     {
         if (currentStage == GrowthStage.ploughed && isWatered && !preventUse)
         {
             currentStage = GrowthStage.planted;
             
+            cropType = cropToPlant;
+
             UpdateCropSprite();
         }
     }
 
     public void UpdateCropSprite()
     {
+        CropInfo activeCrop = CropController.instance.GetCropInfo(cropType);
+
         switch (currentStage)
         {
             case GrowthStage.ploughed:
                 cropSpriteRenderer.sprite = null;
                 break;
             case GrowthStage.planted:
-                cropSpriteRenderer.sprite = cropPlanted;
+                cropSpriteRenderer.sprite = activeCrop.planted;
                 break;
             case GrowthStage.growing1:
-                cropSpriteRenderer.sprite = cropGrowing1;
+                cropSpriteRenderer.sprite = activeCrop.growStage1;
                 break;
             case GrowthStage.growing2:
-                cropSpriteRenderer.sprite = cropGrowing2;
+                cropSpriteRenderer.sprite = activeCrop.growStage2;
                 break;
             case GrowthStage.ripe:
-                cropSpriteRenderer.sprite = cropRipe;
+                cropSpriteRenderer.sprite = activeCrop.ripe;
                 break;
         }
 

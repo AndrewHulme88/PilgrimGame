@@ -39,6 +39,7 @@ public class GridInfo : MonoBehaviour
     {
         grid[yPos].blocks[xPos].isWatered = growBlock.isWatered;
         grid[yPos].blocks[xPos].currentStage = growBlock.currentStage;
+        grid[yPos].blocks[xPos].cropType = growBlock.cropType;
     }
 
     public void GrowCrop()
