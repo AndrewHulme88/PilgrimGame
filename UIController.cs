@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 
     public GameObject[] toolIconsActive;
     public TMP_Text timeText;
+    public InventoryController inventoryController;
 
     private void Awake()
     {
@@ -17,6 +18,14 @@ public class UIController : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventoryController.OpenClose();
         }
     }
 

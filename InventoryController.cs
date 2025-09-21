@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    
+    public void OpenClose()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(gameObject.activeSelf == false)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
