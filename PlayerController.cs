@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform toolIndicator;
     [SerializeField] private float toolRange = 3f;
 
+    public CropController.CropType currentSeedCropType;
+
     private Rigidbody2D rb;
     private float toolWaitCounter;
 

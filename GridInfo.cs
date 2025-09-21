@@ -67,6 +67,8 @@ public class BlockInfo
 
     public bool isWatered;
     public GrowBlock.GrowthStage currentStage;
+
+    public CropController.CropType cropType;
 }
 
 [System.Serializable]

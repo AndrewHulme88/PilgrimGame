@@ -27,6 +27,8 @@ public class GrowBlock : MonoBehaviour
     public bool isWatered;
     public bool preventUse;
 
+    public CropController.CropType cropType;
+
     private Vector2Int gridPosition;
 
     void Update()

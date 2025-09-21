@@ -38,5 +38,13 @@ public class CropController : MonoBehaviour
 [System.Serializable]
 public class CropInfo
 {
-
+    public CropController.CropType cropType;
+    public Sprite finalCrop;
+    public Sprite seedType;
+    public Sprite planted;
+    public Sprite growStage1;
+    public Sprite growStage2;
+    public Sprite ripe;
+    public int seedAmount;
+    public int cropAmount;
 }
