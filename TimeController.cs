@@ -65,6 +65,8 @@ public class TimeController : MonoBehaviour
         currentDay++;
         GridInfo.instance.GrowCrop();
 
+        PlayerPrefs.SetString("TransitionString", "WakeUp");
+
         SceneManager.LoadScene(dayEndScene);
     }
 }
