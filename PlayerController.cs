@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
                     break;
                 case ToolType.seeds:
                     growBlock.PlantSeed(currentSeedCropType);
+                    CropController.instance.UseSeed(currentSeedCropType);
                     break;
                 case ToolType.basket:
                     growBlock.HarvestCrop();

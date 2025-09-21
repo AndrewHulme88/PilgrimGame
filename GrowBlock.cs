@@ -154,6 +154,7 @@ public class GrowBlock : MonoBehaviour
             isWatered = false;
             cropSpriteRenderer.sprite = null;
             SetSoilSprite();
+            CropController.instance.AddCrop(cropType);
         }
     }
 
