@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimeController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class TimeController : MonoBehaviour
     [SerializeField] private float dayStartTime;
     [SerializeField] private float dayEndTime;
     [SerializeField] private float timeSpeed = 0.25f;
+    [SerializeField] private string dayEndScene;
     
     public int currentDay = 1;
 
@@ -63,6 +65,6 @@ public class TimeController : MonoBehaviour
         currentDay++;
         GridInfo.instance.GrowCrop();
 
-        StartDay();
+        SceneManager.LoadScene(dayEndScene);
     }
 }
