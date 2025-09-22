@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     public InventoryController inventoryController;
     public Image seedImage;
     public ShopController shopController;
+    public TMP_Text moneyText;
 
     private void Awake()
     {
@@ -74,5 +75,10 @@ public class UIController : MonoBehaviour
     public void SwitchSeed(CropController.CropType newSeed)
     {
         seedImage.sprite = CropController.instance.GetCropInfo(newSeed).seedType;
+    }
+
+    public void UpdateMoneyText(float currentMoney)
+    {
+        moneyText.text = "$" + currentMoney;
     }
 }
