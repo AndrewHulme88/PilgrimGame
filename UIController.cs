@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     public TMP_Text timeText;
     public InventoryController inventoryController;
     public Image seedImage;
+    public ShopController shopController;
 
     private void Awake()
     {
@@ -28,6 +29,11 @@ public class UIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             inventoryController.OpenClose();
+        }
+
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            shopController.OpenClose();
         }
     }
 
