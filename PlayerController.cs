@@ -50,6 +50,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(UIController.instance != null && UIController.instance.inventoryController != null)
+        {
+            if(UIController.instance.inventoryController.gameObject.activeSelf)
+            {
+                rb.linearVelocity = Vector2.zero;
+                return;
+            }
+        }
+
         if (toolWaitCounter > 0f)
         {
             rb.linearVelocity = Vector2.zero;
