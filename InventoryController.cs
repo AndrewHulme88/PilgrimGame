@@ -3,6 +3,7 @@ using UnityEngine;
 public class InventoryController : MonoBehaviour
 {
     public SeedDisplay[] seedDisplays;
+    public CropDisplay[] cropDisplays;
 
     public void OpenClose()
     {
@@ -22,6 +23,11 @@ public class InventoryController : MonoBehaviour
         foreach (SeedDisplay seedDisplay in seedDisplays)
         {
             seedDisplay.UpdateDisplay();
+        }
+
+        foreach (CropDisplay cropDisplay in cropDisplays)
+        {
+            cropDisplay.UpdateDisplay();
         }
     }
 }

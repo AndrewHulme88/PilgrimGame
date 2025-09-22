@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
                     if(CropController.instance.GetCropInfo(currentSeedCropType).seedAmount > 0)
                     {
                         growBlock.PlantSeed(currentSeedCropType);
-                        CropController.instance.UseSeed(currentSeedCropType);         
+                        //CropController.instance.UseSeed(currentSeedCropType);         
                     }
 
                     break;

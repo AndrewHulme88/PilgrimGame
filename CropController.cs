@@ -72,7 +72,7 @@ public class CropController : MonoBehaviour
         {
             if (cropInfo.cropType == cropToAdd)
             {
-                cropInfo.seedAmount++;
+                cropInfo.cropAmount++;
             }
         }
     }
