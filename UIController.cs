@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class UIController : MonoBehaviour
     public GameObject[] toolIconsActive;
     public TMP_Text timeText;
     public InventoryController inventoryController;
+    public Image seedImage;
 
     private void Awake()
     {
@@ -61,5 +63,10 @@ public class UIController : MonoBehaviour
         {
              timeText.text = Mathf.FloorToInt(currentTime - 24f) + " AM";
         }
+    }
+
+    public void SwitchSeed(CropController.CropType newSeed)
+    {
+        seedImage.sprite = CropController.instance.GetCropInfo(newSeed).seedType;
     }
 }
