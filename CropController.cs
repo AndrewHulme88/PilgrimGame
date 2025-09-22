@@ -76,6 +76,17 @@ public class CropController : MonoBehaviour
             }
         }
     }
+
+    public void AddSeed(CropType seedToAdd, int amount)
+    {
+        foreach (CropInfo cropInfo in cropList)
+        {
+            if (cropInfo.cropType == seedToAdd)
+            {
+                cropInfo.seedAmount += amount;
+            }
+        }
+    }
 }
 
 [System.Serializable]
