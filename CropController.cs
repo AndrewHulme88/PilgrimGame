@@ -87,6 +87,17 @@ public class CropController : MonoBehaviour
             }
         }
     }
+
+    public void RemoveCrop(CropType cropToRemove)
+    {
+        foreach (CropInfo cropInfo in cropList)
+        {
+            if (cropInfo.cropType == cropToRemove)
+            {
+                cropInfo.cropAmount = 0;
+            }
+        }
+    }
 }
 
 [System.Serializable]

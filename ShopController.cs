@@ -4,6 +4,7 @@ using UnityEngine;
 public class ShopController : MonoBehaviour
 {
     public ShopSeedDisplay[] shopSeedDisplays;
+    public ShopCropDisplay[] cropTypes;
 
     public void OpenClose()
     {
@@ -16,6 +17,11 @@ public class ShopController : MonoBehaviour
                 foreach (ShopSeedDisplay shopSeedDisplay in shopSeedDisplays)
                 {
                     shopSeedDisplay.UpdateDisplay();
+                }
+
+                foreach (ShopCropDisplay cropType in cropTypes)
+                {
+                    cropType.UpdateDisplay();
                 }
             }
         }

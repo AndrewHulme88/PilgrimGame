@@ -32,10 +32,14 @@ public class UIController : MonoBehaviour
             inventoryController.OpenClose();
         }
 
+#if UNITY_EDITOR
+        
         if(Input.GetKeyDown(KeyCode.B))
         {
             shopController.OpenClose();
         }
+
+#endif
     }
 
     public void SwitchTool(int selected)

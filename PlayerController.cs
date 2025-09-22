@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         UIController.instance.SwitchTool((int)currentTool);
+        UIController.instance.SwitchSeed(currentSeedCropType);
     }
 
     void Update()
@@ -53,6 +54,15 @@ public class PlayerController : MonoBehaviour
         if(UIController.instance != null && UIController.instance.inventoryController != null)
         {
             if(UIController.instance.inventoryController.gameObject.activeSelf)
+            {
+                rb.linearVelocity = Vector2.zero;
+                return;
+            }
+        }
+
+        if(UIController.instance != null && UIController.instance.shopController != null)
+        {
+            if (UIController.instance.shopController.gameObject.activeSelf)
             {
                 rb.linearVelocity = Vector2.zero;
                 return;
