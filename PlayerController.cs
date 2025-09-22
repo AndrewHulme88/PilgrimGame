@@ -51,21 +51,33 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(UIController.instance != null && UIController.instance.inventoryController != null)
+        if(UIController.instance != null)
         {
-            if(UIController.instance.inventoryController.gameObject.activeSelf)
+            if(UIController.instance.inventoryController != null)
             {
-                rb.linearVelocity = Vector2.zero;
-                return;
+                if(UIController.instance.inventoryController.gameObject.activeSelf)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    return;
+                }
             }
-        }
 
-        if(UIController.instance != null && UIController.instance.shopController != null)
-        {
-            if (UIController.instance.shopController.gameObject.activeSelf)
+            if(UIController.instance.shopController != null)
             {
-                rb.linearVelocity = Vector2.zero;
-                return;
+                if (UIController.instance.shopController.gameObject.activeSelf)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    return;
+                }
+            }
+
+            if(UIController.instance.pauseScreen != null)
+            {
+                if (UIController.instance.pauseScreen.activeSelf)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                    return;
+                }
             }
         }
 

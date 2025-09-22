@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
@@ -12,6 +13,8 @@ public class UIController : MonoBehaviour
     public Image seedImage;
     public ShopController shopController;
     public TMP_Text moneyText;
+    public GameObject pauseScreen;
+    public string mainMenuScene;
 
     private void Awake()
     {
@@ -32,9 +35,14 @@ public class UIController : MonoBehaviour
             inventoryController.OpenClose();
         }
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseUnpause();
+        }
+
 #if UNITY_EDITOR
-        
-        if(Input.GetKeyDown(KeyCode.B))
+
+        if (Input.GetKeyDown(KeyCode.B))
         {
             shopController.OpenClose();
         }
@@ -54,7 +62,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateTimeText(float currentTime)
     {
-        if(currentTime < 12f)
+        if (currentTime < 12f)
         {
             timeText.text = Mathf.FloorToInt(currentTime) + " AM";
         }
@@ -62,17 +70,17 @@ public class UIController : MonoBehaviour
         {
             timeText.text = "12 PM";
         }
-        else if(currentTime < 24f)
+        else if (currentTime < 24f)
         {
             timeText.text = Mathf.FloorToInt(currentTime - 12f) + " PM";
         }
-        else if(currentTime < 25f)
+        else if (currentTime < 25f)
         {
             timeText.text = "12 AM";
         }
         else
         {
-             timeText.text = Mathf.FloorToInt(currentTime - 24f) + " AM";
+            timeText.text = Mathf.FloorToInt(currentTime - 24f) + " AM";
         }
     }
 
@@ -84,5 +92,38 @@ public class UIController : MonoBehaviour
     public void UpdateMoneyText(float currentMoney)
     {
         moneyText.text = "$" + currentMoney;
+    }
+
+    public void PauseUnpause()
+    {
+        if (pauseScreen.activeSelf == false)
+        {
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            pauseScreen.SetActive(false);
+            Time.timeScale = 1f;
+        }
+    }
+
+    public void MainMenu()
+    { 
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(mainMenuScene);
+
+        Destroy(gameObject);
+        Destroy(PlayerController.instance.gameObject);
+        Destroy(GridInfo.instance.gameObject);
+        Destroy(TimeController.instance.gameObject);
+        Destroy(CropController.instance.gameObject);
+        Destroy(CurrencyController.instance.gameObject);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
